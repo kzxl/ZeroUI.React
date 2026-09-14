@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
     return {
       plugins: [react()],
       build: {
+        emptyOutDir: false,
         lib: {
           entry: resolve(__dirname, 'src/index.ts'),
           name: 'ZeroUIReact',
@@ -28,6 +29,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    build: {
+      emptyOutDir: false,
+    },
     server: {
       port: 3000,
       open: false,
