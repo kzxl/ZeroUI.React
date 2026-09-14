@@ -40,11 +40,15 @@ export const MenuIcons = {
   Flow: '📐',
   FitToContent: '🎯',
   AutoLayout: '📐',
+  Workflow: '🔀',
   Connect: '🔗',
   Link: '🔗',
   Unlink: '⛓',
   Shape: '🔷',
   Palette: '🎨',
+  Play: '▶',
+  Stop: '⏹',
+  Data: '📊',
 
   // --- View & Status ---
   ZoomIn: '🔍',
@@ -52,6 +56,7 @@ export const MenuIcons = {
   ZoomFit: '🎯',
   Fullscreen: '⛶',
   Preview: '👁',
+  View: '👁',
   Settings: '⚙',
   Info: 'ℹ',
   Warning: '⚠',

@@ -48,48 +48,61 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
     };
   }, [openDropdownId]);
 
+  const normalizedSelectionMode = String(selectionMode).toLowerCase().replace('_', '-');
+  const normalizedSizeMode = String(sizeMode).toLowerCase().replace('_', '-');
+
   const handleItemClick = (item: ButtonGroupItem, index: number) => {
     if (item.isEnabled === false || item.type === 'separator') return;
 
-    if (item.type === 'dropdown') {
-      setOpenDropdownId((prev) => (prev === item.id ? null : item.id));
+    const executeAction = () => {
+      item.onClick?.();
       item.action?.(item);
       onItemClick?.(item, index);
+    };
+
+    if (item.type === 'dropdown') {
+      setOpenDropdownId((prev) => (prev === item.id ? null : item.id));
+      executeAction();
       return;
     }
 
-    if (item.type === 'toggle') {
+    if (item.type === 'toggle' || normalizedSelectionMode !== 'none') {
       let updated: ButtonGroupItem[] = [];
-      if (selectionMode === 'single-select') {
+      if (normalizedSelectionMode === 'single-select') {
         updated = itemList.map((itm) =>
           itm.id === item.id
-            ? { ...itm, isChecked: true }
-            : itm.type === 'toggle'
-            ? { ...itm, isChecked: false }
-            : itm
+            ? { ...itm, isChecked: true, isSelected: true }
+            : { ...itm, isChecked: false, isSelected: false }
         );
-      } else if (selectionMode === 'multi-select') {
-        updated = itemList.map((itm) =>
-          itm.id === item.id ? { ...itm, isChecked: !itm.isChecked } : itm
-        );
+      } else if (normalizedSelectionMode === 'multi-select') {
+        updated = itemList.map((itm) => {
+          if (itm.id === item.id) {
+            const val = !(itm.isChecked || itm.isSelected);
+            return { ...itm, isChecked: val, isSelected: val };
+          }
+          return itm;
+        });
       } else {
         // Independent toggle
-        updated = itemList.map((itm) =>
-          itm.id === item.id ? { ...itm, isChecked: !itm.isChecked } : itm
-        );
+        updated = itemList.map((itm) => {
+          if (itm.id === item.id) {
+            const val = !(itm.isChecked || itm.isSelected);
+            return { ...itm, isChecked: val, isSelected: val };
+          }
+          return itm;
+        });
       }
       setItemList(updated);
-      onSelectionChange?.(updated.filter((i) => i.isChecked));
+      onSelectionChange?.(updated.filter((i) => i.isChecked || i.isSelected));
     }
 
-    item.action?.(item);
-    onItemClick?.(item, index);
+    executeAction();
   };
 
   const containerClasses = [
     'zero-button-group',
-    sizeMode === 'equal-width' ? 'zero-button-group--equal-width' : '',
-    sizeMode === 'fill' ? 'zero-button-group--fill' : '',
+    normalizedSizeMode === 'equal-width' ? 'zero-button-group--equal-width' : '',
+    normalizedSizeMode === 'fill' ? 'zero-button-group--fill' : '',
     className,
   ]
     .filter(Boolean)
@@ -104,7 +117,11 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
           return <div key={item.id || index} className="zero-button-group__separator" />;
         }
 
-        const isChecked = Boolean(item.isChecked);
+        const isChecked = Boolean(item.isChecked || item.isSelected);
+        const text = item.text ?? item.label;
+        const icon = item.iconGlyph ?? item.icon;
+        const badgeColor = item.badgeColorHex ?? item.badgeColor;
+
         const itemClasses = [
           'zero-button-group__item',
           isChecked ? 'zero-button-group__item--checked' : '',
@@ -134,15 +151,15 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
               disabled={item.isEnabled === false}
               onClick={() => handleItemClick(item, index)}
             >
-              {item.iconGlyph && <span>{item.iconGlyph}</span>}
-              {item.text && <span>{item.text}</span>}
+              {icon && <span>{icon}</span>}
+              {text && <span>{text}</span>}
               {item.type === 'dropdown' && <span style={{ fontSize: '11px' }}>▾</span>}
 
               {/* Badge Dot */}
               {item.showBadgeDot && (
                 <span
                   className="zero-button-group__dot"
-                  style={{ backgroundColor: item.badgeColorHex }}
+                  style={{ backgroundColor: badgeColor }}
                 />
               )}
 
@@ -150,7 +167,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
               {item.badgeText && (
                 <span
                   className="zero-button-group__badge"
-                  style={{ backgroundColor: item.badgeColorHex }}
+                  style={{ backgroundColor: badgeColor }}
                 >
                   {item.badgeText}
                 </span>
@@ -165,7 +182,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
                     key={sub.id}
                     type="button"
                     className={`zero-button-group__dropdown-item ${
-                      sub.isDanger ? 'zero-button-group__dropdown-item--danger' : ''
+                      sub.isDanger || sub.danger ? 'zero-button-group__dropdown-item--danger' : ''
                     }`}
                     onClick={() => {
                       sub.onClick?.();
@@ -173,7 +190,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
                     }}
                   >
                     {sub.icon && <span>{sub.icon}</span>}
-                    <span>{sub.text}</span>
+                    <span>{sub.text ?? sub.label}</span>
                   </button>
                 ))}
               </div>

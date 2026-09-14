@@ -6,6 +6,7 @@ export type ThemeMode = 'dark' | 'light';
 
 interface ThemeContextValue {
   mode: ThemeMode;
+  isDark: boolean;
   theme: ZeroThemePalette;
   setMode: (mode: ThemeMode) => void;
   toggleTheme: () => void;
@@ -13,6 +14,7 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue>({
   mode: 'dark',
+  isDark: true,
   theme: darkTheme,
   setMode: () => {},
   toggleTheme: () => {},
@@ -37,10 +39,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  const currentTheme = mode === 'dark' ? darkTheme : lightTheme;
+  const isDark = mode === 'dark';
+  const currentTheme = isDark ? darkTheme : lightTheme;
 
   return (
-    <ThemeContext.Provider value={{ mode, theme: currentTheme, setMode, toggleTheme }}>
+    <ThemeContext.Provider value={{ mode, isDark, theme: currentTheme, setMode, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

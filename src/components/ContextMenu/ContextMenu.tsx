@@ -4,9 +4,11 @@ import './ContextMenu.css';
 export interface ContextMenuItem {
   id: string;
   text?: string;
+  label?: string;
   icon?: string;
   shortcut?: string;
   isDanger?: boolean;
+  danger?: boolean;
   isSeparator?: boolean;
   disabled?: boolean;
   onClick?: () => void;
@@ -68,9 +70,12 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
           return <div key={item.id || index} className="zero-context-menu__separator" />;
         }
 
+        const isDanger = item.isDanger || item.danger;
+        const text = item.text ?? item.label;
+
         const itemClasses = [
           'zero-context-menu__item',
-          item.isDanger ? 'zero-context-menu__item--danger' : '',
+          isDanger ? 'zero-context-menu__item--danger' : '',
         ]
           .filter(Boolean)
           .join(' ');
@@ -88,7 +93,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
           >
             <span className="zero-context-menu__item-left">
               {item.icon && <span className="zero-context-menu__item-icon">{item.icon}</span>}
-              <span>{item.text}</span>
+              <span>{text}</span>
             </span>
             {item.shortcut && (
               <span className="zero-context-menu__item-shortcut">{item.shortcut}</span>
