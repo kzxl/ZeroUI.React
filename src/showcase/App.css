@@ -1,0 +1,116 @@
+.showcase-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.showcase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--zero-border);
+  padding-bottom: 24px;
+  margin-bottom: 36px;
+}
+
+.showcase-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.showcase-badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  background: var(--zero-primary);
+  color: white;
+  font-weight: 600;
+}
+
+.showcase-section {
+  background-color: var(--zero-card);
+  border: 1px solid var(--zero-border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.showcase-section-title {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--zero-text-primary);
+}
+
+.showcase-section-desc {
+  margin: 0 0 20px 0;
+  font-size: 13px;
+  color: var(--zero-text-secondary);
+}
+
+.showcase-demo-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.showcase-demo-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.showcase-demo-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--zero-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.context-zone {
+  border: 2px dashed var(--zero-border);
+  border-radius: 6px;
+  padding: 40px;
+  text-align: center;
+  color: var(--zero-text-secondary);
+  font-size: 14px;
+  cursor: context-menu;
+  transition: var(--zero-transition);
+}
+
+.context-zone:hover {
+  border-color: var(--zero-primary);
+  background-color: var(--zero-hover);
+}
+
+.icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  background-color: var(--zero-surface);
+  border: 1px solid var(--zero-border);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--zero-text-secondary);
+}
+
+.icon-glyph {
+  font-size: 20px;
+}
