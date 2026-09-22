@@ -1,5 +1,7 @@
 # ZeroUI.React
 
+[![ZeroPlatform Tier](https://img.shields.io/badge/ZeroPlatform-Tier%205%20(Presentation%20%26%20Apps)-e11d48.svg)](https://github.com/kzxl/ZeroPlatform)
+
 Enterprise & Industrial React Component Suite for **ZeroPlatform**, designed for mission-critical SCADA, business workflows, connected button clusters, and high-density enterprise operations.
 
 ## Key Features
