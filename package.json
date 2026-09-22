@@ -1,8 +1,12 @@
 {
   "name": "@zeroui/react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Modern React component suite for ZeroPlatform with unified tokens, headless state models, and industrial-grade controls.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kzxl/ZeroUI.React.git"
+  },
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
   "exports": {
@@ -41,6 +45,6 @@
     "process-map",
     "button-group"
   ],
-  "author": "ZeroUniverse Team",
+  "author": "Phong Võ",
   "license": "MIT"
 }
